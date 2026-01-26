@@ -15,6 +15,8 @@
 * ⚡ **Enerji Optimizasyonu:** Gereksiz enerji tüketim noktalarının tespiti.
 * 📈 **Senaryo Analizi:** "What-If" senaryoları ile geleceğe yönelik tahminler.
 * 📄 **Otomatik Raporlama:** Tek tıkla PDF formatında yönetici özeti oluşturma.
+* <img width="1912" height="849" alt="image" src="https://github.com/user-attachments/assets/648aa47f-5ae9-48e0-b40a-6172589b00cb" />
+
 
 ---
 
