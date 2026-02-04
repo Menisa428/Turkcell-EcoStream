@@ -19,7 +19,7 @@ def generate_event(current, base):
         change = random.randint(-40000, 40000)
         
     new_val = current + change
-    # Merkeze dönüş (Stabilizasyon)
+    # Merkeze dönüş (Stabilizasyon) sağlar
     new_val += (base - new_val) * 0.15 
     if new_val < 0: new_val = 0
     

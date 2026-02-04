@@ -1,4 +1,3 @@
-# create_form.py
 from fpdf import FPDF
 
 # Türkçe karakterleri düzelten fonksiyon
@@ -15,7 +14,8 @@ def clean_text(text):
 class PDFForm(FPDF):
     def header(self):
         self.set_font('Arial', 'B', 10)
-        self.cell(0, 10, clean_text('Eco-Stream Proje Ekibi'), 0, 1, 'R')
+        self.set_text_color(100, 100, 100)
+        self.cell(0, 10, clean_text('Eco-Stream: Teknik Simulasyon Kilavuzu'), 0, 1, 'R')
         self.ln(5)
 
     def footer(self):
@@ -23,68 +23,48 @@ class PDFForm(FPDF):
         self.set_font('Arial', 'I', 8)
         self.cell(0, 10, f'Sayfa {self.page_no()}', 0, 0, 'C')
 
-# --- BAŞVURU İÇERİĞİ (TAKIM BİLGİLERİ DAHİL) ---
+# --- TEKNİK ADIMLAR ---
 data = {
-    "1. PROJE KUNYESI": """
-Proje Adi: Turkcell Eco-Stream: 5G AI-Powered Digital Twin
-Proje Teknoloji Alani: Yapay Zeka, Enerji Verimliligi, Telekomunikasyon, Dijital Ikiz
-Proje Sahiplerinin Adi Soyadi:
-- Nisa Nur Arslan
-- Nisa Yanik
-- Seviye Nur Gonulolmez
+    "ADIM 1: BASLATMA VE SESSION STATE (Initialization)": """
+Simulasyon baslatildiginda, sistem once Streamlit'in 'Session State' hafizasini kontrol eder.
+- Trafik Gecmisi (Traffic History): Son 60 saniyenin verisi hafizaya yuklenir.
+- Termal Gecmis (Thermal History): Sunucularin sicaklik verileri baslatilir.
+- Varsayilan Degerler: Baslangic trafigi 1.5 Tbps, aktif sunucu sayisi 40 olarak atanir.
 """,
-    "2. PROJE AMACI": """
-Bu projenin temel amaci, telekomunikasyon sektorundeki en buyuk operasyonel gider (OPEX) kalemi olan enerji maliyetlerini minimize etmek ve karbon ayak izini azaltmaktir.
+    "ADIM 2: VERI URETIMI VE GIRIS (Input Generation)": """
+Kullanicinin sectigi 'Veri Kaynagi'na gore trafik uretilir:
+A) Algoritmik Mod: Anlik saate gore (Sabah dusuk, Aksam yuksek) baz trafik hesaplanir.
+B) Replay Modu: Sinus dalgasi kullanilarak duzenli ve tahmin edilebilir bir veri akisi saglanir.
 
-Turkcell Eco-Stream, 150 kabinlik bir veri merkezini simule eden bir 'Dijital Ikiz' cozumudur. Proje, sebeke trafigini anlik olarak izleyerek ve yapay zeka ile gelecek yuku tahmin ederek, sunuculari dinamik bir sekilde acip kapatmayi hedefler. Amacimiz, hizmet kalitesinden (SLA) odun vermeden, sadece ihtiyac duyulan kapasiteyi aktif tutarak enerji tuketimini optimize etmektir.
+Bu asama, core/simulator.py dosyasindaki fonksiyonlar tarafindan yonetilir.
 """,
-    "3. PROJE ACIKLAMASI": """
-HEDEF KITLE:
-Projenin birincil hedef kitlesi Turkcell, Vodafone gibi buyuk telekomunikasyon operatorleri ve veri merkezi isletmecileridir.
-
-SORUN VE IHTIYAC:
-Geleneksel sistemler 'Reaktif' degil 'Statik' calisir. Trafik olsa da olmasa da sunucular tam kapasite calisir. Bu da yuksek enerji maliyeti, karbon salinimi ve donanim yipranmasi yaratir.
-
-COZUM VE FAYDA:
-Eco-Stream, Python tabanli simulasyon motoru sayesinde, veri trafigindeki dalgalanmalari milisaniyeler icinde analiz eder. 'Tahminleme Algoritmasi' (Predictive AI) kullanarak trafigin artacagini onceden sezer ve sunuculari devreye alir.
-Yillik projeksiyonda tek bir veri merkezi icin yaklasik 15-20 Milyon TL tasarruf ongorulmektedir.
-
-ERISILEBILIRLIK:
-Yoneticiler icin gelistirilen 'Turkcell Platinum Dashboard' arayuzu ile kullanim kolayligi sunar.
+    "ADIM 3: OLAY ENJEKSIYONU (Event Injection)": """
+Sistemin dayanikliligini test etmek icin normal trafigin uzerine 'Kaos' eklenir:
+- Game+ Event: Rastgele zamanlarda ani trafik sicramalari (Spike) olusturulur.
+- Senaryo Modlari: Kullanici 'Derbi Maci' veya 'Siber Saldiri' sectiginde, trafik carpanlari (Multiplier) devreye girer ve veri manipule edilir.
 """,
-    "4. OZGUNLUK": """
-Eco-Stream, sadece bir otomasyon degil; fizik kurallarini ve donanim sagligini gozeten butunlesik bir muhendislik cozumudur.
-
-FIZIK MOTORU (Physics Engine): Newton'un Soguma Yasasi simule edilerek, termal sonumlenme (Thermal Inertia) hesaplanir.
-WEAR LEVELING (Asinma Dengeleme): 'Rotational Scheduling' algoritmasi ile yuk surekli farkli sunuculara dagitilir, donanim omru uzatilir.
-SIBER SALDIRI MODU: Guvenlik tehdidi algilandiginda tasarrufu devre disi birakip hizmet surekliligini one alan 'Fail-Safe' mekanizmasi vardir.
+    "ADIM 4: AI TAHMINLEME (Predictive Analysis)": """
+Gelen veri, 'core/logic.py' icindeki tahmin motoruna gonderilir.
+- Sistem, gecmis veriye bakarak gelecek 10 dakikalik yuk tahmini yapar.
+- Bu tahmin, grafikte 'Mavi Kesik Cizgi' olarak gorsellestirilir ve operatorun onleyici aksiyon almasini saglar.
 """,
-    "5. ETKI VE SURDURULEBILIRLIK": """
-EKONOMIK DEGER: Enerji tuketimini (PUE degerini) optimize ederek operasyonel maliyetleri dusurur.
-SOSYAL DEGER: Ulkenin enerji disa bagimliligini azaltmaya ve karbon emisyonlarini dusurmeye yardimci olur.
-VERI GIZLILIGI: Kullanilan veriler tamamen anonim 'Sebeke Trafik Yogunlugu' verileridir. KVKK ve GDPR uyumlulugu tamdir.
+    "ADIM 5: KAPASITE PLANLAMA (Capacity Planning)": """
+Endustri Muhendisligi hesaplamalari burada devreye girer:
+1. Ham Ihtiyac: Anlik Trafik / Kabin Kapasitesi (40Gbps).
+2. Guvenlik Stogu (Buffer): Senaryoya gore %20, %40 veya %50 yedek sunucu eklenir.
+3. Hedef Sunucu Sayisi: (Ham Ihtiyac + Buffer) formuluyle kesinlesir.
 """,
-    "6. PAZAR ARASTIRMASI": """
-PAZAR BUYUKLUGU: Global Yesil Veri Merkezi pazarinin hizla buyumesiyle proje genis bir pazara sahiptir.
-REKABET ANALIZI: Rakipler genellikle 'Vendor-Lock' (Marka Bagimliligi) yaratir. Eco-Stream ise 'Vendor-Agnostic' (Markadan Bagimsiz) bir yazilim katmanidir.
-FARKLILASMA: Rakipler sadece enerjiyi kisarken, Eco-Stream yoneticilere finansal projeksiyon sunar ve bunu resmi PDF raporuyla belgeler.
+    "ADIM 6: FIZIK MOTORU VE MALIYET (Physics Engine)": """
+Sunucular kapansa bile sogutma maliyeti aninda dusmez.
+- Newton'un Soguma Yasasi (Thermal Inertia) kullanilarak, sogutma enerjisinin zamanla azalmasi simule edilir.
+- Enerji Tuketimi = (IT Yuku + Sogutma Yuku) * Elektrik Birim Fiyati.
+- Eger 'Solar Mod' aktifse, toplam maliyete %20 indirim uygulanir.
 """,
-    "7. TICARI POTANSIYEL": """
-GELIR MODELI: Veri merkezi basina yillik lisanslama ve saglanan enerji tasarrufu uzerinden basari bazli komisyon (%10-%20).
-BUYUME ONGORUSU: MVP asamasindaki proje, once pilot uygulama, ardindan tum cekirdek sebekeye yayginlastirilabilir.
-""",
-    "8. TEKNIK YONTEM VE UYGULANABILIRLIK": """
-YONTEM: Yoneylem Arastirmasi (OR) teknikleri ve Agirlikli Hareketli Ortalama tahminleme modelleri kullanilmistir. %99.9 SLA basarisina ulasilmistir.
-TEKNOLOJI: Python, Streamlit, Plotly, FPDF.
-UYGULANABILIRLIK: Proje, donanima mudahale etmeden, mevcut yonetim yazilimlarinin uzerine bir 'Orkestrasyon Katmani' olarak (Overlay) kurulabilir.
-""",
-    "9. PROJE YONETIMI": """
-RISK YONETIMI: Yapay zeka hatasina karsi 'Buffer' sunucu mantigi ve siber saldirilara karsi 'Guvenlik Modu' gelistirilmistir.
-YONETIM STRATEJISI: Cevik (Agile) yontemle iteratif olarak gelistirilmistir (V14.0 -> V19.0).
-ADAPTASYON: Modular mimarisi sayesinde farkli donanimlara kolayca adapte olabilir.
-""",
-    "10. PILOT UYGULAMALAR": """
-Proje su an 'Simule Edilmis Pilot Ortamda' (Digital Twin) basariyla calismaktadir. Gercek dunya senaryolari (Derbi Maci, Gece Modu, Saldiri) test edilmis ve yillik tasarruf projeksiyonlari dogrulanmistir.
+    "ADIM 7: CIKTI VE RAPORLAMA (Output & Dashboard)": """
+Tum bu hesaplamalar milisaniyeler icinde tamamlanir ve arayuze yansitilir:
+- Server Rack Gorseli: Hangi sunucunun aktif, hangisinin uykuda oldugunu gosterir.
+- Canli Grafikler: Plotly kutuphanesi ile anlik cizilir.
+- Toast Bildirimleri: Kritik degisimlerde sag altta uyari penceresi acilir.
 """
 }
 
@@ -93,29 +73,41 @@ pdf = PDFForm()
 pdf.add_page()
 pdf.set_auto_page_break(auto=True, margin=15)
 
-# Başlık
+# Başlık Kısmı
 pdf.set_font('Arial', 'B', 16)
-pdf.set_text_color(0, 0, 128) # Lacivert
-pdf.cell(0, 10, clean_text("TURKCELL ECO-STREAM"), 0, 1, 'C')
-pdf.set_font('Arial', '', 12)
-pdf.cell(0, 10, clean_text("5G AI-POWERED DIGITAL TWIN - TAKIM BASVURU FORMU"), 0, 1, 'C')
+pdf.set_text_color(0, 51, 102) # Koyu Mavi
+pdf.cell(0, 10, clean_text("ECO-STREAM SIMULASYON AKISI"), 0, 1, 'C')
+pdf.set_font('Arial', '', 11)
+pdf.set_text_color(50, 50, 50)
+pdf.cell(0, 10, clean_text("Algorithm Workflow & Technical Steps"), 0, 1, 'C')
 pdf.ln(10)
 
 # İçeriği Döngüyle Yaz
-for title, content in data.items():
-    # Başlık
-    pdf.set_font('Arial', 'B', 12)
-    pdf.set_fill_color(240, 240, 240) # Açık Gri
+for step, content in data.items():
+    # Adım Başlığı
+    pdf.set_font('Arial', 'B', 11)
+    pdf.set_fill_color(230, 240, 255) # Açık Mavi Arkaplan
     pdf.set_text_color(0, 0, 0)
-    pdf.cell(0, 8, clean_text(title), 0, 1, 'L', fill=True)
+    pdf.cell(0, 8, clean_text(step), 0, 1, 'L', fill=True)
     
-    # Metin
-    pdf.set_font('Arial', '', 11)
+    # İçerik Metni
+    pdf.set_font('Arial', '', 10)
     pdf.multi_cell(0, 6, clean_text(content.strip()))
-    pdf.ln(5)
+    pdf.ln(6)
 
-# Dosyayı Kaydet
-file_name = "EcoStream_Takim_Basvuru_Dokumani.pdf"
+# İmza Bölümü
+pdf.ln(10)
+pdf.set_draw_color(200, 200, 200)
+pdf.line(10, pdf.get_y(), 200, pdf.get_y()) # Çizgi çek
+pdf.ln(5)
+
+pdf.set_font('Arial', 'B', 10)
+pdf.cell(60, 10, clean_text("Nisa Nur Arslan"), 0, 0, 'C')
+pdf.cell(60, 10, clean_text("Nisa Yanik"), 0, 0, 'C')
+pdf.cell(60, 10, clean_text("Seviye Nur Gonulolmez"), 0, 1, 'C')
+
+# Dosyayı Kaydet (İsmi değiştirdik: Teknik Doküman yaptık)
+file_name = "EcoStream_Teknik_Simulasyon_Dokumani.pdf"
 pdf.output(file_name)
 
-print(f"✅ Takım PDF'i Başarıyla Oluşturuldu: {file_name}")
+print(f"✅ Teknik Kılavuz Başarıyla Oluşturuldu: {file_name}")

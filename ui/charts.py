@@ -3,20 +3,31 @@ import plotly.graph_objects as go
 import streamlit as st
 import pandas as pd
 
-def render_main_chart(traffic_hist, thermal_hist, total_capacity_kw):
-    st.markdown("##### 📈 Enerji Verimliliği Karşılaştırması")
+
+
+def render_main_chart(traffic_hist, thermal_hist, pred_hist, total_capacity_kw):
+    st.markdown("##### 📈 Enerji ve AI Tahmin Analizi")
     fig = go.Figure()
     
+    # 1. Geleneksel Tüketim (Sabit Gri Çizgi)
     baseline = [total_capacity_kw] * len(traffic_hist)
-    fig.add_trace(go.Scatter(y=baseline, mode='lines', name='Geleneksel Tüketim (Eski)', 
+    fig.add_trace(go.Scatter(y=baseline, mode='lines', name='Geleneksel (Eski)', 
                              line=dict(color='#444444', width=2, dash='dash')))
 
+    # 2. Bizim Eco-Stream Tüketimi (Dolu Beyaz Alan)
     thermal_vis = [x * 20000 for x in thermal_hist]
-    fig.add_trace(go.Scatter(y=thermal_vis, mode='lines', name='Eco-Stream Tüketim (Bizim)', 
+    fig.add_trace(go.Scatter(y=thermal_vis, mode='lines', name='Eco-Stream (Bizim)', 
                              line=dict(color='#E1E1E1', width=2), fill='tonexty', fillcolor='rgba(255, 255, 255, 0.05)'))
     
-    fig.add_trace(go.Scatter(y=traffic_hist, mode='lines', name='Veri Trafiği', 
+    # 3. Gerçekleşen Trafik (Sarı Çizgi)
+    fig.add_trace(go.Scatter(y=traffic_hist, mode='lines', name='Gerçekleşen Trafik', 
                              line=dict(color='#FFC900', width=3)))
+
+    # 4. [YENİ] Yapay Zeka Tahmini (Kesik Mavi Çizgi)
+    # Tahmin verisi bazen eksik olabilir, uzunluğu eşitleyelim
+    if len(pred_hist) > 0:
+        fig.add_trace(go.Scatter(y=pred_hist, mode='lines', name='AI Gelecek Tahmini', 
+                                 line=dict(color='#00FFFF', width=2, dash='dot')))
     
     fig.update_layout(height=380, margin=dict(l=0,r=0,t=10,b=0), paper_bgcolor="rgba(0,0,0,0)", 
                       plot_bgcolor="rgba(255,255,255,0.05)", xaxis=dict(showgrid=False, visible=False), 
@@ -83,39 +94,135 @@ def render_turkey_map(scenario):
     st.plotly_chart(fig, use_container_width=True)
 
 def render_server_health_matrix(total_servers, load_count, buffer_count, rotation_index):
-    st.markdown("##### 🧱 Kabin Durumu (Wear Leveling)")
-    grid_html = """
+    st.markdown("##### 🧱 Veri Merkezi Dijital İkizi (Digital Twin View)")
+    
+    # CSS: Modern, Cyberpunk ve Profesyonel Rack Görünümü
+    st.markdown("""
     <style>
-        .rack-container {
-            display: grid; grid-template-columns: repeat(20, 1fr);
-            gap: 3px; padding: 10px;
-            background-color: #00080F; 
-            border-radius: 8px; border: 1px solid #1c2e4a;
+        .datacenter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            padding: 10px;
+            background-color: #050505;
+            border-radius: 10px;
+            border: 1px solid #1c2e4a;
         }
-        .server-box {
-            height: 10px; width: 100%; border-radius: 2px;
-            transition: all 0.5s ease;
+
+        /* Her bir Kabin (Rack) */
+        .server-rack {
+            width: 45px; /* İnce uzun kabinler */
+            background-color: #0e1117;
+            border: 1px solid #333;
+            border-top: 3px solid #FFC900; /* Platinum Sarı Şerit */
+            border-radius: 4px;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
         }
-        .active-load { background-color: #FFC900; box-shadow: 0 0 6px #FFC900; } 
-        .active-buffer { background-color: #FFFFFF; box-shadow: 0 0 4px #FFFFFF; } 
-        .idle { background-color: #0d1b2a; opacity: 0.6; }
-        .maintenance { background-color: #333333; border: 1px solid #555; } 
+        
+        /* Sunucu Ünitesi (Unit) */
+        .server-unit {
+            height: 6px;
+            width: 100%;
+            border-radius: 1px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* Durum Renkleri ve Animasyonlar */
+        .status-active {
+            background-color: #FFC900; /* Turkcell Sarısı */
+            box-shadow: 0 0 5px rgba(255, 201, 0, 0.4);
+            animation: pulse-yellow 2s infinite;
+        }
+        
+        .status-buffer {
+            background-color: #FFFFFF;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+            opacity: 0.8;
+        }
+        
+        .status-idle {
+            background-color: #1a1a1a;
+            border: 1px solid #222;
+        }
+
+        .status-maintenance {
+            background-color: #333;
+            background-image: linear-gradient(45deg, #222 25%, transparent 25%, transparent 50%, #222 50%, #222 75%, transparent 75%, transparent);
+            background-size: 4px 4px;
+        }
+
+        /* Nefes Alma Animasyonu (Canlı hissi verir) */
+        @keyframes pulse-yellow {
+            0% { opacity: 1; box-shadow: 0 0 2px #FFC900; }
+            50% { opacity: 0.6; box-shadow: 0 0 8px #FFC900; }
+            100% { opacity: 1; box-shadow: 0 0 2px #FFC900; }
+        }
+
+        .rack-label {
+            font-size: 8px;
+            color: #555;
+            text-align: center;
+            margin-top: 2px;
+            font-family: monospace;
+        }
     </style>
-    <div class="rack-container">
-    """
+    """, unsafe_allow_html=True)
+
+    # HTML Oluşturucu
+    html_content = '<div class="datacenter-container">'
+    
+    # 150 Sunucuyu 15 Kabine (Her birinde 10 sunucu) bölüyoruz
+    servers_per_rack = 10
+    total_racks = total_servers // servers_per_rack
+    
     total_active = load_count + buffer_count
-    for i in range(total_servers):
-        effective_pos = (i - rotation_index) % total_servers
-        class_name = "idle"
-        tooltip = f"ID: {i+1} | KAPALI"
-        if 0 <= effective_pos < load_count:
-            class_name = "active-load"
-            tooltip = f"ID: {i+1} | AKTİF"
-        elif load_count <= effective_pos < total_active:
-            class_name = "active-buffer"
-            tooltip = f"ID: {i+1} | BUFFER"
-        if class_name == "idle" and (i * 7 + rotation_index) % 97 == 0:
-            class_name = "maintenance"
-        grid_html += f'<div class="server-box {class_name}" title="{tooltip}"></div>'
-    grid_html += "</div>"
-    st.markdown(grid_html, unsafe_allow_html=True)
+
+    for rack_id in range(total_racks):
+        html_content += f'<div class="server-rack" title="Rack #{rack_id+1}">'
+        
+        for u in range(servers_per_rack):
+            # Sunucunun gerçek ID'sini hesapla
+            server_global_id = (rack_id * servers_per_rack) + u
+            
+            # Rotasyon mantığı (Wear Leveling)
+            effective_pos = (server_global_id - rotation_index) % total_servers
+            
+            # Durum Belirleme
+            state_class = "status-idle"
+            tooltip = f"Srv-{server_global_id+1}: UYKUDA"
+            
+            if 0 <= effective_pos < load_count:
+                state_class = "status-active"
+                tooltip = f"Srv-{server_global_id+1}: YÜK ALTINDA (Active)"
+            elif load_count <= effective_pos < total_active:
+                state_class = "status-buffer"
+                tooltip = f"Srv-{server_global_id+1}: GÜVENLİK (Buffer)"
+            
+            # Bakım Modu (Görsel zenginlik için arada bir kapalı göster)
+            if state_class == "status-idle" and (server_global_id * 7 + rotation_index) % 97 == 0:
+                state_class = "status-maintenance"
+                tooltip = f"Srv-{server_global_id+1}: BAKIMDA"
+
+            html_content += f'<div class="server-unit {state_class}" title="{tooltip}"></div>'
+        
+        html_content += f'<div class="rack-label">R-{rack_id+1:02d}</div>'
+        html_content += '</div>' # Rack bitti
+
+    html_content += '</div>' # Container bitti
+    
+    st.markdown(html_content, unsafe_allow_html=True)
+
+    # Altına Açıklama (Legend)
+    st.markdown("""
+    <div style="display:flex; gap:20px; justify-content:center; margin-top:10px; font-size:12px; color:#888;">
+        <div style="display:flex; align-items:center; gap:5px;"><div style="width:10px; height:10px; background:#FFC900; border-radius:50%;"></div> Aktif Yük</div>
+        <div style="display:flex; align-items:center; gap:5px;"><div style="width:10px; height:10px; background:#FFF; border-radius:50%; opacity:0.8;"></div> Buffer (Hazır Kıta)</div>
+        <div style="display:flex; align-items:center; gap:5px;"><div style="width:10px; height:10px; background:#1a1a1a; border:1px solid #333; border-radius:50%;"></div> Uyku Modu (Eco)</div>
+    </div>
+    """, unsafe_allow_html=True)

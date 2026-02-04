@@ -36,7 +36,7 @@ def render_sidebar(active_servers, total_servers, current_traffic, saved_co2, sl
         )
         
         st.markdown("---")
-        live_mode = st.toggle("🔴 SİMÜLASYONU BAŞLAT", value=False)
+        live_mode = st.toggle("🔴 SİMÜLASYONU BAŞLAT", value=True)
         
         with st.expander("⚙️ Mühendislik & Maliyet"):
             data_source = st.radio("Veri Kaynağı", ["Algoritmik", "Replay"])

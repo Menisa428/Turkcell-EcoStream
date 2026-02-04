@@ -20,7 +20,7 @@ def clean_text(text):
     for tr, en in replacements.items():
         text = text.replace(tr, en)
     
-    # Emojileri ve ASCII dışı karakterleri sil
+    # Emojileri ve ASCII dışı karakterleri silmek için
     return text.encode('latin-1', 'ignore').decode('latin-1')
 
 class PDFReport(FPDF):
