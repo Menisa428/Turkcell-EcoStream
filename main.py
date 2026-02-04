@@ -1,5 +1,8 @@
 # main.py
 import streamlit as st
+
+st.set_page_config(layout="wide") # Bu kod tüm ekranlarda sayfayı tam genişlik yapar
+import streamlit as st
 import time
 import numpy as np
 from config.settings import PAGE_CONFIG, APP_STYLE
