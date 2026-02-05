@@ -9,7 +9,7 @@
 
 **Eco-Stream**, endüstriyel veri merkezlerinde enerji tüketimini minimize ederken servis kalitesini (SLA) koruyan, yapay zeka destekli bir simülasyon ve karar destek sistemidir. Proje, Turkcell'in sürdürülebilirlik hedefleriyle tam uyumlu olarak **Hibrit Enerji (Solar + Şebeke)** ve **Dinamik Kapasite Yönetimi** sunar.
 
-![Dashboard Preview](assets/dashboard.png)
+![Dashboard Preview](dashboard.png)
 *(Simülasyon Ekranı: Anlık Trafik Akışı, Güneş Enerjisi Verimi ve Kabin Isı Haritası)*
 
 ---
