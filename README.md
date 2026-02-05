@@ -52,7 +52,7 @@ Bu proje sadece bir arayüz değil, arkasında endüstri mühendisliği prensipl
 
 ## 👥 Takım Üyeleri
 
-* **Nisa Nur Arslan** - Project Lead & System Architect
+* **Nisa Nur Arslan** - Project Lead 
 * **Nisa Yanık** - Project Member
 * **Seviye Nur Gönülölmez** - Project Member
 
