@@ -1,46 +1,61 @@
-# 🌱 EcoStream: Sürdürülebilirlik Odaklı Endüstriyel Analiz Platformu
+# 🌱 Turkcell Eco-Stream: 5G AI-Powered Digital Twin
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://turkcell-ecostream-sc77z9tfxpvyxvm73afges.streamlit.app/)
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
-[![Status](https://img.shields.io/badge/Status-Active-success)]()
+![Project Status](https://img.shields.io/badge/Status-Prototype-green)
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![Focus](https://img.shields.io/badge/Focus-Energy_Efficiency-yellow)
+![Tech](https://img.shields.io/badge/Tech-Digital_Twin-purple)
 
-**EcoStream**, endüstriyel üretim süreçlerinde karbon ayak izini hesaplayan, enerji verimliliğini analiz eden ve sürdürülebilirlik raporları sunan yapay zeka destekli bir veri analizi aracıdır.
+> **Turkcell Data Center Operasyonları için Geliştirilmiş Enerji Optimizasyon ve Dijital İkiz Prototipi.**
 
----
+**Eco-Stream**, endüstriyel veri merkezlerinde enerji tüketimini minimize ederken servis kalitesini (SLA) koruyan, yapay zeka destekli bir simülasyon ve karar destek sistemidir. Proje, Turkcell'in sürdürülebilirlik hedefleriyle tam uyumlu olarak **Hibrit Enerji (Solar + Şebeke)** ve **Dinamik Kapasite Yönetimi** sunar.
 
-## 🚀 Öne Çıkan Özellikler
-
-* 📊 **Dinamik Dashboard:** Üretim verilerini anlık görselleştirme.
-* 🌍 **Karbon Ayak İzi Takibi:** CO2 emisyonlarını uluslararası standartlara göre hesaplama.
-* ⚡ **Enerji Optimizasyonu:** Gereksiz enerji tüketim noktalarının tespiti.
-* 📈 **Senaryo Analizi:** "What-If" senaryoları ile geleceğe yönelik tahminler.
-* 📄 **Otomatik Raporlama:** Tek tıkla PDF formatında yönetici özeti oluşturma.
-* <img width="1912" height="849" alt="image" src="https://github.com/user-attachments/assets/648aa47f-5ae9-48e0-b40a-6172589b00cb" />
-
+![Dashboard Preview](assets/dashboard.png)
+*(Simülasyon Ekranı: Anlık Trafik Akışı, Güneş Enerjisi Verimi ve Kabin Isı Haritası)*
 
 ---
 
-## 🛠️ Kullanılan Teknolojiler
+## 🚀 Projenin Amacı
 
-Bu proje aşağıdaki açık kaynak kütüphaneler kullanılarak geliştirilmiştir:
-
-* **Arayüz:** [Streamlit](https://streamlit.io/)
-* **Veri Analizi:** Pandas & NumPy
-* **Görselleştirme:** Plotly Express
-* **Raporlama:** FPDF
+Veri merkezleri, küresel elektrik tüketiminin önemli bir kısmından sorumludur. Bu proje şu kritik sorunlara mühendislik çözümleri üretir:
+1.  **Atıl Enerji İsrafı:** Trafiğin düşük olduğu saatlerde gereksiz çalışan sunucuları tespit edip "Derin Uyku" moduna almak.
+2.  **Karbon Ayak İzi:** Güneş enerjisi entegrasyonu ile karbon salınımını düşürmek ve bunu finansal getiriye (Karbon Kredisi) dönüştürmek.
+3.  **Kriz Yönetimi:** **Derbi Maçları** veya **Siber Saldırılar** gibi ani trafik artışlarında "Tasarruf" modundan çıkıp "Performans" moduna otomatik geçiş yapmak.
 
 ---
 
-## 💻 Kurulum ve Çalıştırma
+## 🛠️ Temel Özellikler
 
-Projeyi kendi bilgisayarınızda çalıştırmak için:
+### 1. 🌡️ Dijital İkiz (Digital Twin) Görünümü
+Fiziksel sunucuların anlık durumunu (Aktif, Buffer, Uyku) görselleştiren LED destekli kabin (rack) simülasyonu.
 
-```bash
-# Projeyi klonlayın
-git clone [https://github.com/KULLANICI_ADIN/EcoStream_Project.git](https://github.com/KULLANICI_ADIN/EcoStream_Project.git)
+### 2. 🤖 AI Destekli Trafik Tahmini
+Geçmiş verileri analiz ederek gelecek 10 dakikalık yükü tahmin eder ve sunucuları talep gelmeden önce hazırlar (Predictive Scaling).
 
-# Gerekli kütüphaneleri yükleyin
-pip install -r requirements.txt
+### 3. ☀️ Hibrit Enerji & Finansal Analiz
+* **Solar Mod:** Güneş enerjisi entegrasyonu ile şebeke maliyetlerini %20'ye kadar düşürür.
+* **Karbon Kredisi:** Tasarruf edilen CO2 miktarını borsa değerine (Euro/Ton) göre finansal getiriye dönüştürür.
 
-# Uygulamayı başlatın
-streamlit run main.py
+### 4. 🛡️ Akıllı Senaryo Simülasyonu
+* **⚽ Derbi Modu:** Ani trafik artışlarını simüle eder, buffer oranını güvenlik için %40'a çıkarır.
+* **🚨 Siber Saldırı:** Güvenlik protokollerini devreye alır, sistemi korumaya alır.
+
+---
+
+## ⚙️ Mühendislik Yaklaşımı
+
+Bu proje sadece bir arayüz değil, arkasında endüstri mühendisliği prensipleri barındırır:
+* **Newton'un Soğuma Yasası:** Sunucular kapansa bile soğutma maliyetinin anında düşmeyeceğini hesaplayan fizik motoru.
+* **Buffer Stock (Güvenlik Stoğu):** Talep belirsizliğine karşı dinamik kapasite planlama.
+* **Wear Leveling:** Donanım ömrünü uzatmak için sunucuları dönüşümlü çalıştırma algoritması.
+
+---
+
+## 👥 Takım Üyeleri
+
+* **Nisa Nur Arslan** - Project Lead & System Architect
+* **Nisa Yanık** - Project Member
+* **Seviye Nur Gönülölmez** - Project Member
+
+---
+
+###### ⚠️ Disclaimer: Bu proje yarışma kapsamında geliştirilmiş bir prototiptir. Kullanılan veriler ve AI tahmin modelleri simülasyon amaçlıdır.
