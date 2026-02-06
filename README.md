@@ -9,13 +9,13 @@
 
 **Eco-Stream**, endüstriyel veri merkezlerinde enerji tüketimini minimize ederken servis kalitesini (SLA) koruyan, yapay zeka destekli bir simülasyon ve karar destek sistemidir. Proje, Turkcell'in sürdürülebilirlik hedefleriyle tam uyumlu olarak **Hibrit Enerji (Solar + Şebeke)** ve **Dinamik Kapasite Yönetimi** sunar.
 
+---
+
 ## 📸 Simülasyon Görüntüleri
 
 ### 1. 🖥️ Genel Yönetim Paneli (Main Dashboard)
 Sistemin anlık durumunu, trafik akışını ve sunucu doluluk oranlarını gösteren ana ekran.
 ![Genel Bakış](dashboard_genel.png)
-
----
 
 ### 2. ⚡ Akıllı Senaryo Modları
 Sistem, değişen koşullara göre kendini otomatik optimize eder:
@@ -24,7 +24,6 @@ Sistem, değişen koşullara göre kendini otomatik optimize eder:
 | :---: | :---: |
 | ![Derbi](senaryo_derbi.png) | ![Solar](ssenaryo_solar.png) |
 | *Ani trafik artışlarında buffer oranını artırarak kesintiyi önler.* | *Güneş enerjisi devreye girdiğinde şebeke kullanımını minimize eder.* |
-*(Simülasyon Ekranı: Anlık Trafik Akışı, Güneş Enerjisi Verimi ve Kabin Isı Haritası)*
 
 ---
 
@@ -64,12 +63,16 @@ Bu proje sadece bir arayüz değil, arkasında endüstri mühendisliği prensipl
 
 ---
 
-## 👥 Takım Üyeleri
+## 💻 Kurulum ve Çalıştırma
 
-* **Nisa Nur Arslan** - Project Lead 
-* **Nisa Yanık** - Project Member
-* **Seviye Nur Gönülölmez** - Project Member
+Projeyi yerel bilgisayarınızda incelemek isterseniz:
 
----
+```bash
+# 1. Repoyu Klonlayın
+git clone [https://github.com/Menisa428/Turkcell-EcoStream.git](https://github.com/Menisa428/Turkcell-EcoStream.git)
 
-###### ⚠️ Disclaimer: Bu proje yarışma kapsamında geliştirilmiş bir prototiptir. Kullanılan veriler ve AI tahmin modelleri simülasyon amaçlıdır.
+# 2. Gereksinimleri Yükleyin
+pip install -r requirements.txt
+
+# 3. Uygulamayı Başlatın
+streamlit run main.py
